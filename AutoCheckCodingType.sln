@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.489
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "AutoCheckCodingType", "AutoCheckCodingType\AutoCheckCodingType.pyproj", "{7A4210D4-E1B7-43EB-941D-CD654F6E7CBB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A4210D4-E1B7-43EB-941D-CD654F6E7CBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A4210D4-E1B7-43EB-941D-CD654F6E7CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5ADBFBE6-5180-4E64-81FF-23BA5EEADFF6}
+	EndGlobalSection
+EndGlobal
