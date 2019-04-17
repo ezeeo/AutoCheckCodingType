@@ -5,12 +5,14 @@
     <ProjectGuid>7a4210d4-e1b7-43eb-941d-cd654f6e7cbb</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>AutoCheckCodingType.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <SearchPath>CheckEngines</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>AutoCheckCodingType</Name>
     <RootNamespace>AutoCheckCodingType</RootNamespace>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <PublishUrl>Z:\temp</PublishUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,14 +24,40 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AutoCheckCodingType.py" />
+    <Compile Include="CheckEngines\aacodeeng.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CheckEngines\baconeng.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CheckEngines\base58eng.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CheckEngines\base16eng.py" />
+    <Compile Include="CheckEngines\base32eng.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CheckEngines\base64eng.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CheckEngines\base85eng.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CheckEngines\imgbase64eng.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CheckEngines\jjcodeeng.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CheckEngines\jsfuckcodeeng.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CheckEngines\urlcodeeng.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CheckEngines\_MetaEng.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CheckEngines\_noneeng.py" />
     <Compile Include="LoadEngine.py">
       <SubType>Code</SubType>
     </Compile>

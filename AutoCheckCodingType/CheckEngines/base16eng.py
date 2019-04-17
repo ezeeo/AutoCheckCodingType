@@ -4,7 +4,7 @@
 #output normal
 #describe 检测是不是base16
 
-from _MetaEng import MetaEngine
+from _MetaEng import MetaEngine,auto_return
 import sys
 import string
 import base64
@@ -31,7 +31,7 @@ class Base16eng(MetaEngine):
                 return False
         return True
 
-
+    @auto_return
     def check(self):
         ups=self.__check_up()
         lows=self.__check_low()
@@ -74,7 +74,3 @@ class Base16eng(MetaEngine):
                     self.describe+=' all try decode fail'
                     self.possibility-=0.1
             if self.possibility<0:self.possibility=0
-
-        if isinstance(self.possibility,float):self.possibility=round(self.possibility,2)
-        return (self.possibility,self.describe,self.result)
-

@@ -11,7 +11,7 @@ class Runner():
         self.__engine=None
         self.__loader=Loader(self.einfo)
         if immediately_initeng:
-            self.__engine=self.__loader.LoadEngine()
+            self.__get_engine()
 
     #设置需要判别的数据
     def setdata(self,data):

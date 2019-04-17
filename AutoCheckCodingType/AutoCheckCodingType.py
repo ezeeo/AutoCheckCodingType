@@ -86,6 +86,7 @@ class CodingTypeDetector():
     #检测
     def __detector(self,data):
         assert isinstance(data,str)
+        self.__data=data#保存用户输入的数据
         result={}#保存所有检测结果
         errors={}#保存所有检测错误
         for efile,r in self.__engines.items():
@@ -155,31 +156,33 @@ class CodingTypeDetector():
 
         #获取当前时间命名报告文件和报告标题
         filename='report'+time.strftime("[%Y-%m-%d-%H%M%S]", time.localtime())+'.html'
-        title='扫描报告' 
+        title='检测报告' 
         subtitle='创建日期：'+time.strftime("[%Y-%m-%d , %H:%M:%S]", time.localtime())
         htmlhead='''<!DOCTYPE html>
-    <html>
-    <head>
-	    <meta charset="utf-8"> 
-	    <title>Report</title>
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
-	    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-	    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    </head>
-    <body>
-    <div class="container">
-	    <h2>{title}</h2> 
-        <h5>{subtitle}</h5>                          
-	    <table class="table table-hover table-striped">
-		    <thead>
-			    <tr>
+        <html>
+        <head>
+        <meta charset="utf-8"> 
+        <title>Report</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        </head>
+        <body>
+        <div class="container">
+        <h2>{title}</h2> 
+        <h4>{subtitle}</h5>
+        <br>
+        <h5></b>输入信息：</b>{data}</h5>
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
                     <th>#</th>
-				    <th>引擎信息</th>
+                    <th>引擎信息</th>
                     <th>结果信息</th>
-			    </tr>
-		    </thead>
-		    <tbody>'''.format(title=title,subtitle=subtitle)
+                </tr>
+            </thead>
+            <tbody>'''.format(title=title,subtitle=subtitle,data=self.__data)
         htmlend="</div></body></html>"
 
         #排序并添加信息到表格中
@@ -193,36 +196,45 @@ class CodingTypeDetector():
             res=result[name]
 
             #对运行信息格式化处理
-            runinfo=res[1].replace('codec','<br>'+'&nbsp'*17+'codec')
+            enter='<br>'+'&nbsp'*17
+            runinfo=res[1].replace('codec',enter+'codec')
+            resu=res[2]
+            if len(resu)>70 and '\n' not in resu:
+                temp=''
+                for i in range(len(resu)//70):
+                    temp+=resu[i*70:i*70+70]+enter
+                resu=temp
+            else:
+                resu=resu.replace('\n',enter)
 
             tabledata+='''<tr>
                 <td style='text-align:center;vertical-align:middle;'>{num}</td>
-                <td>名称:&nbsp;&nbsp;{name}<br>
-                    版本:&nbsp;&nbsp;{version}<br>
-                    文件:&nbsp;&nbsp;{file}<br>
-                    描述:&nbsp;&nbsp;{describe}
+                <td><b>名称:</b>&nbsp;&nbsp;{name}<br>
+                    <b>版本:</b>&nbsp;&nbsp;{version}<br>
+                    <b>文件:</b>&nbsp;&nbsp;{file}<br>
+                    <b>描述:</b>&nbsp;&nbsp;{describe}
                 </td>
-                <td>概&nbsp;&nbsp;&nbsp;&nbsp;率:&nbsp;&nbsp;&nbsp;&nbsp;{possibility}<br>
-                    运行信息:&nbsp;{runinfo}<br>
-                    结&nbsp;&nbsp;&nbsp;&nbsp;果:&nbsp;&nbsp;&nbsp;&nbsp;{result}
+                <td><b>概&nbsp;&nbsp;&nbsp;&nbsp;率:</b>&nbsp;&nbsp;&nbsp;&nbsp;{possibility}<br>
+                    <b>运行信息:</b>&nbsp;{runinfo}<br>
+                    <b>结&nbsp;&nbsp;&nbsp;&nbsp;果:</b>&nbsp;&nbsp;&nbsp;&nbsp;{result}
                 </td>
             </tr>'''.format(num=num+1,name=engine['name'],version=engine['version'],\
                     file=engine['file'],describe=engine['describe'],\
-                    possibility=res[0],runinfo=runinfo,result=res[2])
+                    possibility=res[0],runinfo=runinfo,result=resu)
         tabledata+='</tbody></table>'
 
         #如果有错误信息，则添加
         if len(errors)!=0:
             errdata='''<br><br><h3 style='color:red'>错误报告</h3>
             <table class="table table-hover table-striped">
-		    <thead>
-			    <tr>
+            <thead>
+                <tr>
                     <th>#</th>
-				    <th>引擎名称</th>
+                    <th>引擎名称</th>
                     <th>错误信息</th>
-			    </tr>
-		    </thead>
-		    <tbody>'''
+                </tr>
+            </thead>
+            <tbody>'''
             for i in range(len(errors)):
                 name=list(errors.keys())[i]
                 errdata+='''<tr>
@@ -232,10 +244,10 @@ class CodingTypeDetector():
             </tr>'''.format(num=i+1,name=name,errmsg=errors[name])
             errdata+='</tbody></table>'
             tabledata+=errdata
-            
+                
 
         #拼接并将结果写入html
-        with open('./Reports/'+filename,'w',encoding='utf-8') as f:
+        with open('.\\Reports\\'+filename,'w',encoding='utf-8') as f:
             f.write(htmlhead+tabledata+htmlend)
         return '.\\Reports\\'+filename
 
@@ -267,11 +279,12 @@ class CodingTypeDetector():
             self.__show_report(result,errors)
         except Exception as ex:
             print('[!]Exception in Detector->'+str(ex))
+        self.__data=''#检测完成即清空输入信息
 
 
 
 if __name__ == "__main__":
-    de=CodingTypeDetector(report_type='html')
+    de=CodingTypeDetector(report_type='console')
     while True:
         data=input('data:')
         de.Detector(data)

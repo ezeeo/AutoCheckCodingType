@@ -58,7 +58,7 @@ class ScanEngine:
                 else:
                     break
             elif l[0]=='#':
-                tmp=l[1:].split(' ')
+                tmp=l[1:].split(' ',maxsplit=1)
                 if len(tmp)!=2:#其他注释信息
                     continue
                 if tmp[0] in Keyword:
