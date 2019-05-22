@@ -10,7 +10,7 @@ import string
 
 class UrlCodeEng(MetaEngine):
     def __init__(self, data = ''):
-        super(UrlCodeEng,self).__init__()
+        super().__init__(data)
         self.txttable=string.ascii_lowercase+string.ascii_uppercase+string.digits+'-_.~'+"!*'();:@&=+$,/?#[]"
 
     

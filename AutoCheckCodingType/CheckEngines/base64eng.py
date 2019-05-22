@@ -4,15 +4,16 @@
 #output normal
 #describe 检测是不是base64
 
-from _MetaEng import MetaEngine,auto_return
+from _MetaEng import MetaEngine,auto_muti_return
 import string
 import base64
 
 class Base64eng(MetaEngine):
     def __init__(self, data = ''):
+        super().__init__(data)
         self.txttable=string.ascii_lowercase+string.ascii_uppercase+string.digits+'+/='
 
-    @auto_return
+    @auto_muti_return
     def check(self):
         for d in self.data:
             if d not in self.txttable:

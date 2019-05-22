@@ -5,7 +5,7 @@
 #describe 检测是不是jjencode,jjencode可以将JS代码转换成只有符号的字符串
 
 
-from _MetaEng import MetaEngine,auto_return
+from _MetaEng import MetaEngine,auto_muti_return
 import sys
 
 
@@ -40,7 +40,7 @@ class JJCodeEng(MetaEngine):
         ,".$(",".$(",".$$+\"\\\"\"+"]
         self.__end="\"\\\"\")())();"
 
-    @auto_return
+    @auto_muti_return
     def check(self):
         if self.__end not in self.data:
             self.describe+='警告,必要结束标记未找到'

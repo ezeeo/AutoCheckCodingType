@@ -4,16 +4,17 @@
 #output normal
 #describe 检测是不是base58
 
-from _MetaEng import MetaEngine,auto_return
+from _MetaEng import MetaEngine,auto_muti_return
 import sys
 import string
 import base64
 
 class Base58eng(MetaEngine):
     def __init__(self, data = ''):
+        super().__init__(data)
         self.txttable='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 
-    def decode(self):
+    def b58decode(self):
         temp = 0
         for c in self.data:
             temp = temp * 58 + self.txttable.find(c)
@@ -21,7 +22,7 @@ class Base58eng(MetaEngine):
             self.result=chr(temp%256)+self.result
             temp = temp//256
 
-    @auto_return
+    @auto_muti_return
     def check(self):
         for d in self.data:
             if d not in self.txttable:
@@ -31,7 +32,7 @@ class Base58eng(MetaEngine):
         else:
             try:
                 self.describe='default use ascii'
-                self.decode()
+                self.b58decode()
                 self.describe+=' decode success'
                 self.possibility+=0.2
             except Exception as ex:

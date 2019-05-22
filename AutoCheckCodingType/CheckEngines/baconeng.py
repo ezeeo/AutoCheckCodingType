@@ -4,18 +4,19 @@
 #output normal
 #describe 检测是不是培根密码
 
-from _MetaEng import MetaEngine,auto_return
+from _MetaEng import MetaEngine,auto_muti_return
 import re
 
 class BaconEng(MetaEngine):
     def __init__(self, data = ''):
+        super().__init__(data)
         self.alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
         self.first_cipher = ["aaaaa","aaaab","aaaba","aaabb","aabaa","aabab","aabba","aabbb","abaaa","abaab","ababa","ababb","abbaa","abbab","abbba","abbbb","baaaa","baaab","baaba","baabb","babaa","babab","babba","babbb","bbaaa","bbaab"]
         self.second_cipher = ["aaaaa","aaaab","aaaba","aaabb","aabaa","aabab","aabba","aabbb","abaaa","abaaa","abaab","ababa","ababb","abbaa","abbab","abbba","abbbb","baaaa","baaab","baaba","baabb","baabb","babaa","babab","babba","babbb"]
 
 
 
-    @auto_return
+    @auto_muti_return
     def check(self):
         s1,s2,a,b=self.__parse_ab_for_other_char(self.data)
         if s1!=False:#只有两种字符

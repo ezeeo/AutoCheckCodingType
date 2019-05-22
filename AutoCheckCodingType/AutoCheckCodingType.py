@@ -291,7 +291,7 @@ class CodingTypeDetector():
 
 
 if __name__ == "__main__":
-    de=CodingTypeDetector(report_type='console')
+    de=CodingTypeDetector(report_type='html')
     while True:
         data=input('data:')
         de.Detector(data)

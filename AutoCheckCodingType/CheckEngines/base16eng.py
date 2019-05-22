@@ -4,13 +4,14 @@
 #output normal
 #describe 检测是不是base16
 
-from _MetaEng import MetaEngine,auto_return
+from _MetaEng import MetaEngine,auto_muti_return
 import sys
 import string
 import base64
 
 class Base16eng(MetaEngine):
     def __init__(self, data = ''):
+        super().__init__(data)
         self.txttable='ABCDEF'+string.digits#长度为偶数
         self.describe=''
         self.result=''
@@ -31,7 +32,7 @@ class Base16eng(MetaEngine):
                 return False
         return True
 
-    @auto_return
+    @auto_muti_return
     def check(self):
         ups=self.__check_up()
         lows=self.__check_low()

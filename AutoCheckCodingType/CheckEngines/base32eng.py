@@ -4,16 +4,17 @@
 #output normal
 #describe 检测是不是base32
 
-from _MetaEng import MetaEngine,auto_return
+from _MetaEng import MetaEngine,auto_muti_return
 import sys
 import string
 import base64
 
 class Base32eng(MetaEngine):
     def __init__(self, data = ''):
+        super().__init__(data)
         self.txttable=string.ascii_uppercase+'01234567='
 
-    @auto_return
+    @auto_muti_return
     def check(self):
         for d in self.data:
             if d not in self.txttable:
@@ -38,9 +39,15 @@ class Base32eng(MetaEngine):
                 self.describe+=' decode success'
                 self.possibility+=0.2
             except Exception as ex:
-                self.describe+='base32 decode error->'+str(ex)+',output raw result'
+                self.describe+=',base32 decode error->'+str(ex)+',output raw result'
                 self.possibility-=0.1
-                self.result=base64.b32decode(self.data).__str__()
+                try:
+                    self.result=base64.b32decode(self.data).__str__()
+                except Exception as ex:
+                    self.possibility=0
+                    self.describe+=',raw decode fail->'+str(ex)+',end'
+                    self.result=''
+
         
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@
 #output normal
 #describe 检测是不是base64的图片
 
-from _MetaEng import MetaEngine,auto_return
+from _MetaEng import MetaEngine,auto_muti_return
 import sys
 import string
 import base64
@@ -12,9 +12,10 @@ from urllib import parse
 
 class ImgBase64eng(MetaEngine):
     def __init__(self, data = ''):
+        super().__init__(data)
         self.txttable=string.ascii_lowercase+string.ascii_uppercase+string.digits+'+/='+':;,'
 
-    @auto_return
+    @auto_muti_return
     def check(self):
         tmpdata=parse.unquote(self.data)
         if tmpdata!=self.data:

@@ -14,6 +14,7 @@ class MetaEngine(ABC):
         self.possibility=0#是此编码的可能性0-1
         self.describe=''#随意
         self.result=''#解码后的数据
+        self.txttable=''
 
         self.now_decode_mode=None#默认没有解码器，或者可以是下面list中的一个
         self.decode_as_list=[]#以什么方式decode
@@ -44,6 +45,8 @@ class MetaEngine(ABC):
                     self.txttable=tmp_txttable
                     self.data=tmp_data
                     return None
+                self.txttable=tmp_txttable
+                self.data=tmp_data
                 if len(x)%2!=0:x='0'+x
                 result=[]
                 for i in range(len(x)//2):
@@ -55,6 +58,22 @@ class MetaEngine(ABC):
             else:return None
         self.decode_as_list.append('hexdecode')
         self.decode_func['hexdecode']=hex_decode
+
+
+        def url_decode(x):
+            if isinstance(x,str):
+                try:
+                    from urllib import parse
+                    result= parse.unquote(x)
+                    if result==x:
+                        return None
+                    else:
+                        return result
+                except:
+                    return None
+            else:return None
+        self.decode_as_list.append('urldecode')
+        self.decode_func['urldecode']=url_decode
 
 
     def decode(self):
@@ -76,7 +95,7 @@ class MetaEngine(ABC):
     @abstractmethod#虚函数
     def check(self):
         '''需要写的核心地方，必须重新实现'''
-        return (self.possibility,self.describe,self.result)
+        pass
 
 
     def add_return(self,clean_result=True):
@@ -160,6 +179,7 @@ def auto_muti_return(func):
                 me_instance.set_data(decode_datas[decode_name])
                 func(me_instance)
                 me_instance.add_return(me_instance)
-
-            return me_instance.muti_mode_return
+            muti_result_tmp=me_instance.muti_mode_return
+            me_instance.muti_mode_return={}#清空之前的结果
+            return muti_result_tmp
     return wrapper
