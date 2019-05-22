@@ -1,6 +1,7 @@
 import sys
 import os
 import time
+import copy
 from ScanEngine import ScanEngine
 from RunEngine import Runner
 
@@ -26,7 +27,7 @@ class CodingTypeDetector():
 
     #扫描引擎
     def __init_scan_engine(self,path):
-        print('[+]Engines path:'+'CheckEngines' if not path else str(path))
+        print('[+]Engines path:'+('CheckEngines' if not path else str(path)))
         if not path:
             self.__scaner=ScanEngine()
         else:
@@ -100,7 +101,13 @@ class CodingTypeDetector():
                     errors[efile]=state
                     continue
                 else:
-                    result[efile]=r.result
+                    if isinstance(r.result,tuple):
+                        result[efile]=r.result
+                    elif isinstance(r.result,dict):
+                        for k in r.result.keys():
+                            result[efile+'_'+k]=r.result[k]
+                            self.__file_engine_table[efile+'_'+k]=copy.deepcopy(self.__file_engine_table[efile])
+                            self.__file_engine_table[efile+'_'+k]['name']=self.__file_engine_table[efile]['name']+'_'+k
             except Exception as ex:
                 errors[efile]=str(ex)
         return result,errors

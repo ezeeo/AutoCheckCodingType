@@ -11,7 +11,7 @@ class ScanEngine:
             ScanEngine._instance.__init()
         return ScanEngine._instance
 
-    def __init(self,path='CheckEngines'):
+    def __init(self,path='./CheckEngines'):
         if not os.path.exists(path):raise Exception('engine path not exists')
         self.path=path
         #path=os.path.abspath('.')+'\\Library\\createaword'
@@ -29,7 +29,7 @@ class ScanEngine:
 
     def __scan_engine(self):#扫描存在的文件
         '''扫描存在的引擎'''
-        files=self.__scan_files('./'+self.path+'/')
+        files=self.__scan_files(self.path+'/')
         engines=[]
         errors=[]
         for f in files:

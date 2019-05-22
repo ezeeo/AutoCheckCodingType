@@ -16,7 +16,7 @@ class JSFuckCodeEng(MetaEngine):
     
     @auto_return
     def check(self):
-        if not self.check_in_txttable(' '):
+        if not self.check_in_txttable(ex_allow=' '):
             pass
         else:
-            self.possibility=1
+            pass

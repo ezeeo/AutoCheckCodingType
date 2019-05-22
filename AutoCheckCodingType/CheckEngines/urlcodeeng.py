@@ -4,15 +4,18 @@
 #output normal
 #describe 检测是不是urlencode
 
-from _MetaEng import MetaEngine,auto_return
+from _MetaEng import MetaEngine,auto_muti_return
 from urllib import parse
 import string
 
 class UrlCodeEng(MetaEngine):
     def __init__(self, data = ''):
+        super(UrlCodeEng,self).__init__()
         self.txttable=string.ascii_lowercase+string.ascii_uppercase+string.digits+'-_.~'+"!*'();:@&=+$,/?#[]"
 
-    @auto_return
+    
+    #@auto_return
+    @auto_muti_return
     def check(self):
         for i in self.data:
             if i not in self.txttable:
@@ -22,14 +25,14 @@ class UrlCodeEng(MetaEngine):
             self.possibility=0
             self.describe='未出现需要url编码的字符'
             self.result=''
-            return (0 if self.possibility<0 else self.possibility,self.describe,self.result)
+            return
         if '%' in self.data:
             self.possibility+=0.1
         else:
             self.possibility=0
             self.describe='出现需编码字符但未出现%'
             self.result=''
-            return (0 if self.possibility<0 else self.possibility,self.describe,self.result)
+            return
         try:
             self.result=parse.unquote(self.data)
             self.describe='url解码成功'
