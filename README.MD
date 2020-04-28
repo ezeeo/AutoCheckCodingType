@@ -6,6 +6,9 @@
     而且你可以自己写解码器(一个输入一个输出)，然后使用add_decode_func添加到解码器列表，这样在以后的检测中都会自动调用(使用了auto_muti_return作为装饰器的情况下)
     
 ## 使用
+    可以直接在作者另一项目ctf-tools中使用
+    如果需要嵌入其他的代码
+    
     相应目录添加进sys.path后  
     from AutoCheckCodingType import CodingTypeDetector
     即可
